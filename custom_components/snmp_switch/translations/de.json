@@ -76,12 +76,25 @@
   "options": {
     "step": {
       "init": {
-        "title": "SNMP Switch Optionen",
+        "title": "SNMP-Switch-Optionen",
+        "description": "Einstellungen und SNMP-Zugangsdaten sind getrennt, sodass das Ändern einer Einstellung die Zugangsdaten nicht berührt.",
+        "menu_options": {
+          "settings": "Einstellungen",
+          "credentials": "SNMP-Zugangsdaten"
+        }
+      },
+      "settings": {
+        "title": "Einstellungen",
         "data": {
           "scan_interval": "Abfrageintervall (Sekunden)",
-          "use_port_names": "Portname aus der Switch-Konfiguration als Port-Beschreibung verwenden",
           "port": "SNMP Port",
           "name": "Gerätename (leer = automatisch aus sysName)",
+          "use_port_names": "Portname aus der Switch-Konfiguration als Port-Beschreibung verwenden"
+        }
+      },
+      "credentials": {
+        "title": "SNMP-Zugangsdaten",
+        "data": {
           "community_read": "Community String (Lesen)",
           "community_write": "Community String (Schreiben, optional)",
           "v3_username": "Benutzername (USM Security Name)",
