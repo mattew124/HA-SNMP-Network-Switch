@@ -17,6 +17,7 @@ CONF_COMMUNITY_READ = "community_read"
 CONF_COMMUNITY_WRITE = "community_write"
 CONF_SNMP_VERSION = "snmp_version"
 CONF_SCAN_INTERVAL = "scan_interval"
+CONF_USE_PORT_NAMES = "use_port_names"
 
 # Config Keys — SNMPv3 specific
 CONF_V3_USERNAME = "v3_username"
@@ -107,21 +108,29 @@ OID_IF_ALIAS = "1.3.6.1.2.1.31.1.1.1.18"
 OID_IF_HC_IN_OCTETS = "1.3.6.1.2.1.31.1.1.1.6"
 OID_IF_HC_OUT_OCTETS = "1.3.6.1.2.1.31.1.1.1.10"
 
-# ifType values that are not physical ports (IANAifType): software loopback,
-# propVirtual (e.g. VLAN SVIs on Aruba CX), tunnel, l2vlan, l3ipvlan.
-# Such interfaces are not switch ports and are left out of the port list.
-VIRTUAL_IF_TYPES = {24, 53, 131, 135, 136}
-
 # Power Ethernet MIB (RFC 3621) — PoE
 # Table index is <pethPsePortGroupIndex>.<pethPsePortIndex>
 OID_POE_PORT_ADMIN_ENABLE = "1.3.6.1.2.1.105.1.1.1.3"
 OID_POE_PORT_DETECTION_STATUS = "1.3.6.1.2.1.105.1.1.1.6"
+
+# Q-BRIDGE-MIB (RFC 4363) — VLANs. Tables are indexed by VLAN id; the port
+# bitmaps are indexed by dot1dBasePort (BRIDGE-MIB), mapped to ifIndex below.
+OID_VLAN_STATIC_NAME = "1.3.6.1.2.1.17.7.1.4.3.1.1"
+OID_VLAN_STATIC_EGRESS = "1.3.6.1.2.1.17.7.1.4.3.1.2"
+OID_VLAN_STATIC_UNTAGGED = "1.3.6.1.2.1.17.7.1.4.3.1.4"
+OID_PORT_PVID = "1.3.6.1.2.1.17.7.1.4.5.1.1"
+OID_BASE_PORT_IFINDEX = "1.3.6.1.2.1.17.1.4.1.2"
 
 # pethPsePortDetectionStatus values
 POE_DETECTION_STATUS_MAP = {
     1: "disabled", 2: "searching", 3: "delivering_power",
     4: "fault", 5: "test", 6: "other_fault",
 }
+
+# ifType values that are not physical ports (IANAifType): software loopback,
+# propVirtual (e.g. VLAN SVIs on Aruba CX), tunnel, l2vlan, l3ipvlan.
+# Such interfaces are not switch ports and are left out of the port list.
+VIRTUAL_IF_TYPES = {24, 53, 131, 135, 136}
 
 # Interface Status Mappings
 IF_ADMIN_STATUS_MAP = {1: "up", 2: "down", 3: "testing"}

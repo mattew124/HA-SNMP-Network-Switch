@@ -173,8 +173,10 @@ class SNMPPoESwitch(CoordinatorEntity[SNMPSwitchCoordinator], SwitchEntity):
         poe = self.coordinator.get_poe(self._if_index)
         if not poe:
             return {}
+        iface = self.coordinator.get_interface(self._if_index) or {}
         return {
             "if_index": self._if_index,
+            "alias": iface.get("alias", ""),
             "detection_status": POE_DETECTION_STATUS_MAP.get(poe.get("detection_status"), "unknown"),
         }
 
