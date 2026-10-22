@@ -106,6 +106,8 @@
       "port_count": { "name": "Port Count" },
       "port_status": { "name": "{port_name} Status" },
       "port_admin_status": { "name": "{port_name} Admin Status" },
+      "port_vlan": { "name": "{port_name} VLAN" },
+      "vlan": { "name": "VLAN {vlan_id}" },
       "port_rx": { "name": "{port_name} RX" },
       "port_tx": { "name": "{port_name} TX" },
       "port_rx_errors": { "name": "{port_name} RX Errors" },

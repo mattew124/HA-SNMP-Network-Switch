@@ -107,6 +107,14 @@ OID_IF_ALIAS = "1.3.6.1.2.1.31.1.1.1.18"
 OID_IF_HC_IN_OCTETS = "1.3.6.1.2.1.31.1.1.1.6"
 OID_IF_HC_OUT_OCTETS = "1.3.6.1.2.1.31.1.1.1.10"
 
+# Q-BRIDGE-MIB (RFC 4363) — VLANs. Tables are indexed by VLAN id; the port
+# bitmaps are indexed by dot1dBasePort (BRIDGE-MIB), mapped to ifIndex below.
+OID_VLAN_STATIC_NAME = "1.3.6.1.2.1.17.7.1.4.3.1.1"
+OID_VLAN_STATIC_EGRESS = "1.3.6.1.2.1.17.7.1.4.3.1.2"
+OID_VLAN_STATIC_UNTAGGED = "1.3.6.1.2.1.17.7.1.4.3.1.4"
+OID_PORT_PVID = "1.3.6.1.2.1.17.7.1.4.5.1.1"
+OID_BASE_PORT_IFINDEX = "1.3.6.1.2.1.17.1.4.1.2"
+
 # Interface Status Mappings
 IF_ADMIN_STATUS_MAP = {1: "up", 2: "down", 3: "testing"}
 IF_OPER_STATUS_MAP = {
