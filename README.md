@@ -6,7 +6,7 @@
 Monitor port status, traffic & errors — toggle ports — edit switch settings — directly from Home Assistant.
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg?logo=home-assistant&logoColor=white)](https://github.com/hacs/integration)
-[![Version](https://img.shields.io/github/v/release/git4sim/HA-SNMP-Network-Switch?label=version&color=blue)](https://github.com/git4sim/HA-SNMP-Network-Switch/releases)
+[![Version](https://img.shields.io/github/v/release/mattew124/HA-SNMP-Network-Switch?label=version&color=blue)](https://github.com/mattew124/HA-SNMP-Network-Switch/releases)
 [![Home Assistant](https://img.shields.io/badge/HA-2025.1%2B-brightgreen?logo=home-assistant)](https://home-assistant.io)
 [![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python)](https://python.org)
 [![MIT License](https://img.shields.io/github/license/git4sim/HA-SNMP-Network-Switch?color=lightgrey)](https://github.com/git4sim/HA-SNMP-Network-Switch/blob/main/LICENSE)
@@ -30,7 +30,7 @@ Monitor port status, traffic & errors — toggle ports — edit switch settings 
 > | **Port names from the switch config** — an `alias` attribute on every port entity, and an option to show the name as the port Description | fork only |
 > | **Options split into *Settings* and *SNMP credentials*** — changing a setting no longer shows or touches the credentials | fork only |
 >
-> **Install this fork with HACS:** *HACS → ⋮ → Custom repositories →* add `https://github.com/mattew124/HA-SNMP-Network-Switch`, category **Integration** → download **SNMP Network Switch** → restart Home Assistant. If you already have the original installed, remove it from HACS first so the two don't fight over the same folder. The fork has no releases: HACS tracks the `main` branch and shows a commit hash as the version.
+> **Install this fork with HACS:** *HACS → ⋮ → Custom repositories →* add `https://github.com/mattew124/HA-SNMP-Network-Switch`, category **Integration** → download **SNMP Network Switch** → restart Home Assistant. If you already have the original installed, remove it from HACS first so the two don't fight over the same folder. Releases are tagged `vX.Y.Z-fork.N` (for example `v3.1.0-fork.1`, which sorts below the original's `3.1.0`, so a later upstream release is always seen as newer) and HACS installs the latest one.
 
 > [!NOTE]
 > This integration supports **SNMP v1, v2c and v3** (noAuthNoPriv / authNoPriv / authPriv).
@@ -71,7 +71,7 @@ After downloading, restart Home Assistant.
 
 ### Manual Installation
 
-Copy the `custom_components/snmp_switch/` folder from this repository's [`main` branch](https://github.com/mattew124/HA-SNMP-Network-Switch/tree/main/custom_components/snmp_switch) (the fork has no releases; the [original's latest release](https://github.com/git4sim/HA-SNMP-Network-Switch/releases/latest) does not include the changes above) into your HA config directory:
+Copy the `custom_components/snmp_switch/` folder from this repository's [latest release](https://github.com/mattew124/HA-SNMP-Network-Switch/releases/latest) (the [original's latest release](https://github.com/git4sim/HA-SNMP-Network-Switch/releases/latest) does not include the changes above) into your HA config directory:
 
 ```
 /config/custom_components/snmp_switch/
