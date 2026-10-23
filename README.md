@@ -14,6 +14,24 @@ Monitor port status, traffic & errors — toggle ports — edit switch settings 
 
 ---
 
+> [!IMPORTANT]
+> ## This is a fork with extra features and fixes
+> This is [`mattew124/HA-SNMP-Network-Switch`](https://github.com/mattew124/HA-SNMP-Network-Switch), a fork of [`git4sim/HA-SNMP-Network-Switch`](https://github.com/git4sim/HA-SNMP-Network-Switch) that carries changes which are not in the original yet. The aim is to get them merged upstream; once they are, switching back to the original repository is the better choice.
+>
+> **What the fork adds** (tested on an Aruba CX 6100, AOS-CX 10.13, over SNMPv3):
+>
+> | Change | Upstream PR |
+> |---|---|
+> | **PoE control and status** per port: on/off switch and detection-status sensor (POWER-ETHERNET-MIB) | [#10](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/10) |
+> | **Virtual interfaces are no longer ports** — a switch's management VLAN interface (e.g. `vlan1`) was counted and controllable as a port | [#9](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/9) |
+> | **Changing an option no longer leaves every entity unavailable** (the entry is now reloaded through Home Assistant) | [#11](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/11) |
+> | **No more "blocking call" warnings at startup** — pysnmp's MIBs are preloaded off the event loop (fixes [#8](https://github.com/git4sim/HA-SNMP-Network-Switch/issues/8)) | [#12](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/12) |
+> | **VLAN sensors** — one per VLAN (name, tagged/untagged member ports) and one per port (native VLAN plus tagged VLAN ids) | fork only |
+> | **Port names from the switch config** — an `alias` attribute on every port entity, and an option to show the name as the port Description | fork only |
+> | **Options split into *Settings* and *SNMP credentials*** — changing a setting no longer shows or touches the credentials | fork only |
+>
+> **Install this fork with HACS:** *HACS → ⋮ → Custom repositories →* add `https://github.com/mattew124/HA-SNMP-Network-Switch`, category **Integration** → download **SNMP Network Switch** → restart Home Assistant. If you already have the original installed, remove it from HACS first so the two don't fight over the same folder. The fork has no releases: HACS tracks the `main` branch and shows a commit hash as the version.
+
 > [!NOTE]
 > This integration supports **SNMP v1, v2c and v3** (noAuthNoPriv / authNoPriv / authPriv).
 > Read-only access is enough for monitoring. A write community or SNMPv3 write user enables port toggling and SET services.
@@ -44,16 +62,16 @@ Monitor port status, traffic & errors — toggle ports — edit switch settings 
 
 Adding HA-SNMP-Network-Switch to Home Assistant can be done via HACS using this button:
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=git4sim&repository=HA-SNMP-Network-Switch&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mattew124&repository=HA-SNMP-Network-Switch&category=integration)
 
 > [!NOTE]
-> If the button above doesn't work, add `https://github.com/git4sim/HA-SNMP-Network-Switch` manually as a Custom Repository of type **Integration** in HACS, then search for **SNMP Network Switch** and click Download.
+> If the button above doesn't work, add `https://github.com/mattew124/HA-SNMP-Network-Switch` manually as a Custom Repository of type **Integration** in HACS, then search for **SNMP Network Switch** and click Download.
 
 After downloading, restart Home Assistant.
 
 ### Manual Installation
 
-Copy the `custom_components/snmp_switch/` folder from the [latest release](https://github.com/git4sim/HA-SNMP-Network-Switch/releases/latest) into your HA config directory:
+Copy the `custom_components/snmp_switch/` folder from this repository's [`main` branch](https://github.com/mattew124/HA-SNMP-Network-Switch/tree/main/custom_components/snmp_switch) (the fork has no releases; the [original's latest release](https://github.com/git4sim/HA-SNMP-Network-Switch/releases/latest) does not include the changes above) into your HA config directory:
 
 ```
 /config/custom_components/snmp_switch/
