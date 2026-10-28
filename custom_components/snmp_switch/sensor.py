@@ -197,7 +197,7 @@ class SNMPPortCountSensor(SNMPBaseSensor):
     def native_value(self) -> int | None:
         # Count the discovered ports; ifNumber also counts virtual interfaces
         # (e.g. VLAN SVIs), which are not switch ports.
-        if self.coordinator.data and "interfaces" in self.coordinator.data:
+        if self.coordinator.data and self.coordinator.data.get("interfaces"):
             return len(self.coordinator.data["interfaces"])
         val = self.coordinator.get_system_value("if_number")
         try:
@@ -388,9 +388,7 @@ class SNMPPortVlanSensor(SNMPBaseSensor):
         if not info:
             return {}
         vlans = self.coordinator.get_vlans()
-        iface = self.coordinator.get_interface(self._if_index) or {}
         return {
-            "alias": iface.get("alias", ""),
             "pvid": info.get("pvid"),
             "untagged_vlans": [_vlan_label(vlans, v) for v in info["untagged"]],
             "tagged_vlans": [_vlan_label(vlans, v) for v in info["tagged"]],

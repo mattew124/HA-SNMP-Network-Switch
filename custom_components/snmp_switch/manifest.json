@@ -8,5 +8,9 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/git4sim/HA-SNMP-Network-Switch/issues",
   "requirements": ["pysnmp>=7.0.0"],
-  "version": "3.1.0-fork.1"
+<<<<<<< HEAD
+  "version": "3.1.0-fork.2"
+=======
+  "version": "3.1.0-fork.2"
+>>>>>>> 1d13ec9 (Release 3.1.0-fork.1: manifest version and README release wording)
 }

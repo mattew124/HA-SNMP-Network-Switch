@@ -16,21 +16,21 @@ Monitor port status, traffic & errors — toggle ports — edit switch settings 
 
 > [!IMPORTANT]
 > ## This is a fork with extra features and fixes
-> This is [`mattew124/HA-SNMP-Network-Switch`](https://github.com/mattew124/HA-SNMP-Network-Switch), a fork of [`git4sim/HA-SNMP-Network-Switch`](https://github.com/git4sim/HA-SNMP-Network-Switch) that carries changes which are not in the original yet. The aim is to get them merged upstream; once they are, switching back to the original repository is the better choice.
+> This is [`mattew124/HA-SNMP-Network-Switch`](https://github.com/mattew124/HA-SNMP-Network-Switch), a fork of [`git4sim/HA-SNMP-Network-Switch`](https://github.com/git4sim/HA-SNMP-Network-Switch) that carries changes which are not in the original yet. PRs #9–#12 are merged upstream; the rest are open as PRs. The aim is to get them merged upstream; once they are, switching back to the original repository is the better choice.
 >
 > **What the fork adds** (tested on an Aruba CX 6100, AOS-CX 10.13, over SNMPv3):
 >
 > | Change | Upstream PR |
 > |---|---|
-> | **PoE control and status** per port: on/off switch and detection-status sensor (POWER-ETHERNET-MIB) | [#10](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/10) |
-> | **Virtual interfaces are no longer ports** — a switch's management VLAN interface (e.g. `vlan1`) was counted and controllable as a port | [#9](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/9) |
-> | **Changing an option no longer leaves every entity unavailable** (the entry is now reloaded through Home Assistant) | [#11](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/11) |
-> | **No more "blocking call" warnings at startup** — pysnmp's MIBs are preloaded off the event loop (fixes [#8](https://github.com/git4sim/HA-SNMP-Network-Switch/issues/8)) | [#12](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/12) |
-> | **VLAN sensors** — one per VLAN (name, tagged/untagged member ports) and one per port (native VLAN plus tagged VLAN ids) | fork only |
-> | **Port names from the switch config** — an `alias` attribute on every port entity, and an option to show the name as the port Description | fork only |
-> | **Options split into *Settings* and *SNMP credentials*** — changing a setting no longer shows or touches the credentials | fork only |
+> | **PoE control and status** per port: on/off switch and detection-status sensor (POWER-ETHERNET-MIB) | merged upstream in 3.0.6 ([#10](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/10), via [#13](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/13)) |
+> | **Virtual interfaces are no longer ports** — a switch's management VLAN interface (e.g. `vlan1`) was counted and controllable as a port | merged upstream in 3.0.6 ([#9](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/9), via [#13](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/13)) |
+> | **Changing an option no longer leaves every entity unavailable** (the entry is now reloaded through Home Assistant) | merged upstream in 3.0.6 ([#11](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/11), via [#13](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/13)) |
+> | **No more "blocking call" warnings at startup** — pysnmp's MIBs are preloaded off the event loop (fixes [#8](https://github.com/git4sim/HA-SNMP-Network-Switch/issues/8)) | merged upstream in 3.0.6 ([#12](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/12), via [#13](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/13)) |
+> | **VLAN sensors** — one per VLAN (name, tagged/untagged member ports) and one per port (native VLAN plus tagged VLAN ids) | [#14](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/14) |
+> | **Port names from the switch config** — an `alias` attribute on every port entity, and an option to show the name as the port Description | [#15](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/15) |
+> | **Options split into *Settings* and *SNMP credentials*** — changing a setting no longer shows or touches the credentials | [#16](https://github.com/git4sim/HA-SNMP-Network-Switch/pull/16) |
 >
-> **Install this fork with HACS:** *HACS → ⋮ → Custom repositories →* add `https://github.com/mattew124/HA-SNMP-Network-Switch`, category **Integration** → download **SNMP Network Switch** → restart Home Assistant. If you already have the original installed, remove it from HACS first so the two don't fight over the same folder. Releases are tagged `vX.Y.Z-fork.N` (for example `v3.1.0-fork.1`, which sorts below the original's `3.1.0`, so a later upstream release is always seen as newer) and HACS installs the latest one.
+> **Install this fork with HACS:** *HACS → ⋮ → Custom repositories →* add `https://github.com/mattew124/HA-SNMP-Network-Switch`, category **Integration** → download **SNMP Network Switch** → restart Home Assistant. If you already have the original installed, remove it from HACS first so the two don't fight over the same folder. Releases are tagged `vX.Y.Z-fork.N` (for example `v3.1.0-fork.2`, which sorts below the original's `3.1.0`, so a later upstream release is always seen as newer) and HACS installs the latest one.
 
 > [!NOTE]
 > This integration supports **SNMP v1, v2c and v3** (noAuthNoPriv / authNoPriv / authPriv).

@@ -87,9 +87,9 @@
         "title": "Einstellungen",
         "data": {
           "scan_interval": "Abfrageintervall (Sekunden)",
+          "use_port_names": "Portname aus der Switch-Konfiguration als Port-Beschreibung verwenden",
           "port": "SNMP Port",
-          "name": "Gerätename (leer = automatisch aus sysName)",
-          "use_port_names": "Portname aus der Switch-Konfiguration als Port-Beschreibung verwenden"
+          "name": "Gerätename (leer = automatisch aus sysName)"
         }
       },
       "credentials": {
@@ -120,7 +120,10 @@
       "port_count": { "name": "Anzahl Ports" },
       "port_status": { "name": "{port_name} Status" },
       "port_admin_status": { "name": "{port_name} Admin-Status" },
-      "port_poe_status": { "name": "{port_name} PoE-Status" },
+      "port_poe_status": {
+        "name": "{port_name} PoE-Status",
+        "state": { "disabled": "Deaktiviert", "searching": "Suche", "delivering_power": "Liefert Strom", "fault": "Fehler", "test": "Test", "other_fault": "Anderer Fehler", "unknown": "Unbekannt" }
+      },
       "port_vlan": { "name": "{port_name} VLAN" },
       "vlan": { "name": "VLAN {vlan_id}" },
       "port_rx": { "name": "{port_name} RX" },

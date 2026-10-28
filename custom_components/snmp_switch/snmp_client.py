@@ -94,15 +94,15 @@ except ImportError:
     USM_PRIV_CFB256_AES = None
 
 from .const import (
-    OID_BASE_PORT_IFINDEX,
+    OID_IF_TYPE,
+    VIRTUAL_IF_TYPES,
     OID_POE_PORT_ADMIN_ENABLE,
     OID_POE_PORT_DETECTION_STATUS,
+    OID_BASE_PORT_IFINDEX,
     OID_PORT_PVID,
     OID_VLAN_STATIC_EGRESS,
     OID_VLAN_STATIC_NAME,
     OID_VLAN_STATIC_UNTAGGED,
-    OID_IF_TYPE,
-    VIRTUAL_IF_TYPES,
     SNMP_VERSION_1,
     SNMP_VERSION_3,
     V3_AUTH_MD5,
@@ -554,33 +554,44 @@ class SNMPSwitchClient:
         """Read PoE state per port (POWER-ETHERNET-MIB). Empty if unsupported.
 
         pethPsePortIndex is assumed to equal the ifIndex of the same port,
-        which holds on the switches this has been tested against.
+        which holds on the switches this has been tested against. The group
+        index (pethPsePortGroupIndex) is kept so writes go to the right row.
+        If a port index occurs in several groups it can't be mapped to one
+        ifIndex, so only the lowest group is used.
         """
         admin = await self.walk(OID_POE_PORT_ADMIN_ENABLE)
         detection = await self.walk(OID_POE_PORT_DETECTION_STATUS)
 
-        def _idx(d: dict) -> dict[int, int]:
-            result: dict[int, int] = {}
+        def _idx(d: dict) -> dict[tuple[int, int], int]:
+            result: dict[tuple[int, int], int] = {}
             for oid, val in d.items():
                 try:
-                    result[int(oid.split(".")[-1])] = int(val)
-                except (ValueError, IndexError):
+                    group, port = oid.split(".")[-2:]
+                    result[(int(group), int(port))] = int(val)
+                except ValueError:
                     pass
             return result
 
         admin_m = _idx(admin)
         det_m = _idx(detection)
-        return {
-            idx: {"admin_enable": val == 1, "detection_status": det_m.get(idx)}
-            for idx, val in admin_m.items()
-        }
+        ports: dict[int, dict[str, Any]] = {}
+        for (group, port), val in sorted(admin_m.items()):
+            if port in ports:
+                _LOGGER.debug("PoE port %d also in group %d, ignored", port, group)
+                continue
+            ports[port] = {
+                "group": group,
+                "admin_enable": val == 1,
+                "detection_status": det_m.get((group, port)),
+            }
+        return ports
 
-    async def set_poe_port_enable(self, port_index: int, enable: bool) -> bool:
-        # Group index is 1 on single-unit/non-stacked switches.
+    async def set_poe_port_enable(
+        self, port_index: int, enable: bool, group: int = 1
+    ) -> bool:
         return await self.set_integer(
-            f"{OID_POE_PORT_ADMIN_ENABLE}.1.{port_index}", 1 if enable else 2
+            f"{OID_POE_PORT_ADMIN_ENABLE}.{group}.{port_index}", 1 if enable else 2
         )
-
     async def get_vlans(self) -> dict[str, Any]:
         """Read VLANs (Q-BRIDGE-MIB). Empty dicts if the switch has none.
 

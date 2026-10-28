@@ -26,7 +26,7 @@ _config_entries.OptionsFlow = _OptionsFlow
 # `from homeassistant import config_entries` must resolve to this module.
 sys.modules["homeassistant"].config_entries = _config_entries
 
-from custom_components.snmp_switch import config_flow, const  # noqa: E402
+from custom_components.snmp_switch import config_flow  # noqa: E402
 
 
 def make_flow(data=None, options=None):
@@ -62,7 +62,7 @@ def test_settings_form_has_no_credential_fields(data):
     kind, kw = run(make_flow(data).async_step_settings())
     keys = schema_keys(kw)
     assert kind == "form" and kw["step_id"] == "settings"
-    assert {"scan_interval", "port", "name", const.CONF_USE_PORT_NAMES} <= keys
+    assert {"scan_interval", "port", "name"} <= keys
     assert not keys & {
         "community_read", "community_write", "v3_username", "v3_auth_key", "v3_priv_key",
     }
@@ -70,10 +70,10 @@ def test_settings_form_has_no_credential_fields(data):
 
 def test_saving_settings_keeps_existing_credential_options():
     flow = make_flow(V3, options={"v3_auth_key": "changed-earlier", "scan_interval": 60})
-    kind, kw = run(flow.async_step_settings({const.CONF_USE_PORT_NAMES: True, "scan_interval": 30}))
+    kind, kw = run(flow.async_step_settings({"name": "Core switch", "scan_interval": 30}))
     assert kind == "entry"
     assert kw["data"]["v3_auth_key"] == "changed-earlier"  # untouched
-    assert kw["data"]["scan_interval"] == 30 and kw["data"][const.CONF_USE_PORT_NAMES] is True
+    assert kw["data"]["scan_interval"] == 30 and kw["data"]["name"] == "Core switch"
 
 
 def test_credentials_form_v2c_and_v3_fields():
@@ -84,10 +84,10 @@ def test_credentials_form_v2c_and_v3_fields():
 
 
 def test_saving_credentials_keeps_settings_options():
-    flow = make_flow(V2C, options={const.CONF_USE_PORT_NAMES: True, "scan_interval": 45})
+    flow = make_flow(V2C, options={"name": "Core switch", "scan_interval": 45})
     kind, kw = run(flow.async_step_credentials({"community_read": "newpub", "community_write": ""}))
     assert kind == "entry"
-    assert kw["data"][const.CONF_USE_PORT_NAMES] is True and kw["data"]["scan_interval"] == 45
+    assert kw["data"]["name"] == "Core switch" and kw["data"]["scan_interval"] == 45
     assert kw["data"]["community_read"] == "newpub"
     assert kw["data"]["community_write"] is None  # empty write community clears it
 

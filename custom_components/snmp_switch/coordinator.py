@@ -5,6 +5,7 @@ import logging
 from datetime import timedelta
 from typing import Any
 
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -23,11 +24,13 @@ class SNMPSwitchCoordinator(DataUpdateCoordinator):
         client: SNMPSwitchClient,
         name: str,
         scan_interval: int,
+        config_entry: ConfigEntry | None = None,
     ) -> None:
         """Initialisierung."""
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=config_entry,
             name=f"SNMP Switch {name}",
             update_interval=timedelta(seconds=scan_interval),
         )
@@ -47,7 +50,7 @@ class SNMPSwitchCoordinator(DataUpdateCoordinator):
                 poe = {}
             try:
                 vlan_data = await self.client.get_vlans()
-            except Exception as err:  # VLAN info is optional too
+            except Exception as err:  # VLAN info is optional; never fail the poll
                 _LOGGER.debug("VLAN query failed: %s", err)
                 vlan_data = {"vlans": {}, "ports": {}}
 
